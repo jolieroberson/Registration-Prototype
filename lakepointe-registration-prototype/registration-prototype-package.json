@@ -1,6 +1,0 @@
-{
-  "name": "lakepointe-registration-prototype",
-  "version": "1.0.0",
-  "description": "Interactive prototype for Lakepointe Church custom event registration system (Webflow + Rock RMS)",
-  "private": true
-}
