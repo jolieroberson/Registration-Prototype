@@ -198,52 +198,53 @@ body {
 .capacity-bar-fill.orange { background: var(--lp-warning); }
 
 /* ── Main Layout ── */
+/* Swapped: registration form is now the wide left column (1fr), details are the narrow right sidebar (360px) */
 .page-content {
   max-width: var(--lp-max-width);
   margin: 0 auto;
   padding: 0 24px 60px;
   display: grid;
-  grid-template-columns: 1fr 360px;
+  grid-template-columns: 1fr 320px;
   gap: 32px;
 }
 
-/* ── Event Description ── */
+/* ── Event Description (now in right sidebar) ── */
 .event-description {
   background: var(--lp-card-bg);
   border-radius: var(--lp-radius);
-  padding: 28px 32px;
+  padding: 24px 28px;
   box-shadow: var(--lp-shadow);
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
+.event-description:last-child { margin-bottom: 0; }
 .event-description h2 {
-  font-size: 20px;
+  font-size: 17px;
   color: var(--lp-primary);
-  margin-bottom: 16px;
+  margin-bottom: 14px;
   font-weight: 700;
 }
 .event-description p {
-  font-size: 15px;
+  font-size: 14px;
   color: var(--lp-text-secondary);
   line-height: 1.75;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
+.event-description p:last-child { margin-bottom: 0; }
 
-/* ── Registration Form Card ── */
+/* ── Registration Form Card (now in main left column) ── */
 .reg-card {
   background: var(--lp-card-bg);
   border-radius: var(--lp-radius);
   box-shadow: var(--lp-shadow);
   overflow: hidden;
-  position: sticky;
-  top: 80px;
 }
 .reg-card-header {
   background: var(--lp-primary);
-  padding: 20px 24px;
+  padding: 20px 28px;
   color: white;
 }
 .reg-card-header h3 {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 700;
   margin-bottom: 4px;
 }
@@ -251,12 +252,12 @@ body {
   font-size: 14px;
   opacity: 0.85;
 }
-.reg-card-body { padding: 24px; }
+.reg-card-body { padding: 28px; }
 
 /* ── Form Styles ── */
 .form-section {
-  margin-bottom: 24px;
-  padding-bottom: 24px;
+  margin-bottom: 28px;
+  padding-bottom: 28px;
   border-bottom: 1px solid var(--lp-border-light);
 }
 .form-section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
@@ -439,7 +440,7 @@ select.form-input {
 .discount-result.success { display: block; background: var(--lp-success-light); color: var(--lp-success); }
 .discount-result.error { display: block; background: var(--lp-error-light); color: var(--lp-error); }
 
-/* ── Payment Fields (Simulated Gateway SDK) ── */
+/* ── Payment Fields ── */
 .payment-field-container {
   border: 1.5px solid var(--lp-border);
   border-radius: var(--lp-radius-sm);
@@ -768,16 +769,28 @@ select.form-input {
 }
 .proto-banner a { color: white; text-decoration: underline; }
 
-/* ── Description Panel (Left column) ── */
-.left-column { display: flex; flex-direction: column; gap: 24px; }
+/* ── Right Column (event details sidebar) ── */
+.right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: sticky;
+  top: 80px;
+  align-self: start;
+}
 
 /* ── Responsive ── */
 @media (max-width: 900px) {
   .page-content {
     grid-template-columns: 1fr;
   }
-  .reg-card {
+  .right-column {
     position: static;
+    /* Show details below form on mobile */
+    order: 2;
+  }
+  .reg-card {
+    order: 1;
   }
   .hero-details {
     grid-template-columns: 1fr;
@@ -869,38 +882,10 @@ select.form-input {
   </div>
 </section>
 
-<!-- Main Content: Description + Registration Form -->
+<!-- Main Content: Registration Form (left/main) + Event Details (right sidebar) -->
 <div class="page-content">
-  <!-- Left Column -->
-  <div class="left-column">
-    <div class="event-description">
-      <h2>About This Event</h2>
-      <p>Merge Weekend is Lakepointe's signature event for anyone exploring faith, looking to take a next step, or wanting to learn what it means to follow Jesus. Whether you've been at Lakepointe for years or it's your first weekend, this event is designed to help you connect with God and with others in a meaningful way.</p>
-      <p>Join us for a powerful weekend of worship, teaching, and community. Saturday evening kicks off with a special worship experience and message, followed by Sunday morning services where you'll have the opportunity to go deeper. Childcare is available for birth through kindergarten during all sessions.</p>
-      <p>Registration includes a free event t-shirt, resource packet, and access to all weekend sessions. Lunch is provided on Saturday evening between sessions. An optional small group sign-up is available as part of registration.</p>
-    </div>
 
-    <div class="event-description">
-      <h2>Schedule</h2>
-      <p><strong>Saturday, April 25</strong><br>
-      5:30 PM &mdash; Doors Open &amp; Check-in<br>
-      6:00 PM &mdash; Worship &amp; Session 1<br>
-      7:30 PM &mdash; Dinner &amp; Fellowship<br>
-      8:30 PM &mdash; Session 2 &amp; Prayer</p>
-      <p><strong>Sunday, April 26</strong><br>
-      8:30 AM &mdash; Doors Open<br>
-      9:00 AM &mdash; Session 3 (First Service)<br>
-      11:00 AM &mdash; Session 3 (Second Service)<br>
-      12:30 PM &mdash; Closing &amp; Next Steps</p>
-    </div>
-
-    <div class="event-description">
-      <h2>What to Expect</h2>
-      <p>Merge Weekend is a casual environment. Come as you are. You'll experience live worship music, engaging teaching, and time for conversation with others on the same journey. Small group breakout sessions are available for those who want to go deeper. Every session is designed to be welcoming regardless of where you are in your faith journey.</p>
-    </div>
-  </div>
-
-  <!-- Right Column: Registration Form -->
+  <!-- Left Column: Registration Form (now the wide main area) -->
   <div class="reg-card" id="regCard">
     <div class="reg-card-header">
       <h3>Register for This Event</h3>
@@ -1107,6 +1092,36 @@ select.form-input {
 
     </div>
   </div>
+
+  <!-- Right Column: Event Details Sidebar -->
+  <div class="right-column">
+    <div class="event-description">
+      <h2>About This Event</h2>
+      <p>Merge Weekend is Lakepointe's signature event for anyone exploring faith, looking to take a next step, or wanting to learn what it means to follow Jesus. Whether you've been at Lakepointe for years or it's your first weekend, this event is designed to help you connect with God and with others in a meaningful way.</p>
+      <p>Join us for a powerful weekend of worship, teaching, and community. Saturday evening kicks off with a special worship experience and message, followed by Sunday morning services where you'll have the opportunity to go deeper. Childcare is available for birth through kindergarten during all sessions.</p>
+      <p>Registration includes a free event t-shirt, resource packet, and access to all weekend sessions. Lunch is provided on Saturday evening between sessions. An optional small group sign-up is available as part of registration.</p>
+    </div>
+
+    <div class="event-description">
+      <h2>Schedule</h2>
+      <p><strong>Saturday, April 25</strong><br>
+      5:30 PM &mdash; Doors Open &amp; Check-in<br>
+      6:00 PM &mdash; Worship &amp; Session 1<br>
+      7:30 PM &mdash; Dinner &amp; Fellowship<br>
+      8:30 PM &mdash; Session 2 &amp; Prayer</p>
+      <p><strong>Sunday, April 26</strong><br>
+      8:30 AM &mdash; Doors Open<br>
+      9:00 AM &mdash; Session 3 (First Service)<br>
+      11:00 AM &mdash; Session 3 (Second Service)<br>
+      12:30 PM &mdash; Closing &amp; Next Steps</p>
+    </div>
+
+    <div class="event-description">
+      <h2>What to Expect</h2>
+      <p>Merge Weekend is a casual environment. Come as you are. You'll experience live worship music, engaging teaching, and time for conversation with others on the same journey. Small group breakout sessions are available for those who want to go deeper. Every session is designed to be welcoming regardless of where you are in your faith journey.</p>
+    </div>
+  </div>
+
 </div>
 
 <!-- Confirmation Modal -->
@@ -1160,9 +1175,7 @@ select.form-input {
     <span style="margin-left:auto;font-size:11px;opacity:0.6" id="logCount">0 calls</span>
   </button>
   <div class="console-panel" id="consolePanel">
-    <div class="console-panel-inner" id="consoleLogs">
-      <!-- API logs will be injected here -->
-    </div>
+    <div class="console-panel-inner" id="consoleLogs"></div>
   </div>
 </div>
 
@@ -1188,7 +1201,6 @@ function renderLogs() {
   const container = document.getElementById('consoleLogs');
   const countEl = document.getElementById('logCount');
   countEl.textContent = `${apiLogs.length} calls`;
-
   container.innerHTML = apiLogs.map(l => `
     <div class="api-log">
       <span class="method ${l.method.toLowerCase()}">${l.method}</span>
@@ -1205,15 +1217,12 @@ async function simulatePageLoad() {
   logApi('GET', '/api/EventItemOccurrences/4821?$expand=EventItem,Campus,Schedule&loadAttributes=simple', 'pending', '', '');
   await sleep(300);
   logApi('GET', '/api/EventItemOccurrences/4821?$expand=EventItem,Campus,Schedule&loadAttributes=simple', '200 OK', 'Event data loaded', '187ms');
-
   logApi('GET', '/api/RegistrationInstances?$filter=EventItemOccurrenceId eq 4821&$expand=RegistrationTemplate', 'pending', '', '');
   await sleep(250);
   logApi('GET', '/api/RegistrationInstances?$filter=EventItemOccurrenceId eq 4821&$expand=RegistrationTemplate', '200 OK', 'InstanceId: 6347', '142ms');
-
   logApi('GET', '/api/RegistrationTemplates/215?loadAttributes=simple', 'pending', '', '');
   await sleep(200);
   logApi('GET', '/api/RegistrationTemplates/215?loadAttributes=simple', '200 OK', '7 form fields, 3 fees', '98ms');
-
   logApi('GET', '/api/RegistrationRegistrants?$filter=RegistrationInstanceId eq 6347&$select=Id&$count=true', 'pending', '', '');
   await sleep(180);
   logApi('GET', '/api/RegistrationRegistrants?$filter=RegistrationInstanceId eq 6347&$select=Id&$count=true', '200 OK', '58 of 100 spots filled', '76ms');
@@ -1289,7 +1298,6 @@ function removeRegistrant(btn) {
   const block = btn.closest('.registrant-block');
   block.remove();
   registrantCount--;
-  // Renumber
   document.querySelectorAll('.registrant-block').forEach((b, i) => {
     b.dataset.index = i + 1;
     const num = b.querySelector('.num');
@@ -1305,7 +1313,6 @@ function updateTotal() {
   const childcare = document.getElementById('feeChildcare').checked ? 10 : 0;
   const regCost = registrantCount * BASE_PRICE;
   let discount = 0;
-
   if (discountApplied) {
     if (discountApplied.type === 'percent') {
       discount = regCost * (discountApplied.amount / 100);
@@ -1313,24 +1320,17 @@ function updateTotal() {
       discount = discountApplied.amount;
     }
   }
-
   const total = Math.max(0, regCost + parking + childcare - discount);
-
-  // Rebuild order summary
   let lines = `<div class="order-line"><span>Registration (${registrantCount}x)</span><span>$${regCost.toFixed(2)}</span></div>`;
   if (parking > 0) lines += `<div class="order-line"><span>Reserved Parking</span><span>$${parking.toFixed(2)}</span></div>`;
   if (childcare > 0) lines += `<div class="order-line"><span>Childcare</span><span>$${childcare.toFixed(2)}</span></div>`;
   if (discount > 0) lines += `<div class="order-line discount"><span>${discountApplied.code} (${discountApplied.type === 'percent' ? discountApplied.amount + '%' : '$' + discountApplied.amount})</span><span>-$${discount.toFixed(2)}</span></div>`;
   lines += `<div class="order-line total"><span>Total</span><span>$${total.toFixed(2)}</span></div>`;
-
   document.getElementById('orderSummary').innerHTML = lines;
   document.getElementById('submitBtn').innerHTML = total > 0
     ? `Complete Registration &mdash; $${total.toFixed(2)}`
     : `Complete Registration &mdash; Free`;
-
-  // Show/hide payment section
   document.getElementById('paymentSection').style.display = total > 0 ? '' : 'none';
-
   return total;
 }
 
@@ -1338,20 +1338,15 @@ function updateTotal() {
 async function validateDiscount() {
   const code = document.getElementById('discountInput').value.trim().toUpperCase();
   const resultEl = document.getElementById('discountResult');
-
   if (!code) return;
-
   logApi('POST', `/api/registration/validate-discount`, 'pending', '', '');
   await sleep(400);
-
-  // Simulated discount codes
   const codes = {
     'MERGE2026': { type: 'percent', amount: 20, code: 'MERGE2026' },
     'EARLYBIRD': { type: 'dollar', amount: 10, code: 'EARLYBIRD' },
     'STAFF': { type: 'percent', amount: 100, code: 'STAFF' },
     'VOLUNTEER': { type: 'dollar', amount: 15, code: 'VOLUNTEER' },
   };
-
   if (codes[code]) {
     discountApplied = codes[code];
     const desc = discountApplied.type === 'percent' ? `${discountApplied.amount}% off` : `$${discountApplied.amount} off`;
@@ -1395,67 +1390,45 @@ function formatExp(input) {
 async function submitRegistration() {
   const btn = document.getElementById('submitBtn');
   const total = updateTotal();
-
-  // Disable button, show spinner
   btn.disabled = true;
   btn.innerHTML = '<div class="spinner"></div> Processing...';
-
-  // Step 1: Tokenize payment (simulated)
   if (total > 0) {
     logApi('POST', '[NMI Collect.js] Tokenize card data', 'pending', '', '');
     await sleep(600);
     logApi('POST', '[NMI Collect.js] Tokenize card data', '200 OK', 'Token: tok_1Abc...xYz', '534ms');
   }
-
-  // Step 2: Person matching
   logApi('GET', '/api/People?$filter=Email eq \'paul.lafata@lakepointe.church\'', 'pending', '', '');
   await sleep(350);
   logApi('GET', '/api/People?$filter=Email eq \'paul.lafata@lakepointe.church\'', '200 OK', 'Matched PersonId: 8421', '124ms');
-
-  // Step 3: Process payment
   if (total > 0) {
     logApi('POST', '/api/FinancialTransactions', 'pending', '', '');
     await sleep(700);
     logApi('POST', '/api/FinancialTransactions', '201 Created', `Charged $${total.toFixed(2)} via NMI`, '672ms');
   }
-
-  // Step 4: Create Registration
   logApi('POST', '/api/Registrations', 'pending', '', '');
   await sleep(400);
   logApi('POST', '/api/Registrations', '201 Created', 'RegistrationId: 12847', '198ms');
-
-  // Step 5: Create Registrant(s)
   for (let i = 1; i <= registrantCount; i++) {
     logApi('POST', '/api/RegistrationRegistrants', 'pending', '', '');
     await sleep(250);
     logApi('POST', '/api/RegistrationRegistrants', '201 Created', `Registrant ${i} of ${registrantCount}`, '134ms');
   }
-
-  // Step 6: Launch confirmation workflow
   logApi('POST', '/api/LaunchWorkflow/RegistrationConfirmation', 'pending', '', '');
   await sleep(300);
   logApi('POST', '/api/LaunchWorkflow/RegistrationConfirmation', '200 OK', 'Email queued', '87ms');
-
-  // Step 7: Group placement workflow
   logApi('POST', '/api/LaunchWorkflow/GroupPlacement', 'pending', '', '');
   await sleep(200);
   logApi('POST', '/api/LaunchWorkflow/GroupPlacement', '200 OK', 'Added to Group: Merge Weekend Apr 2026', '92ms');
-
-  // Show confirmation
   await sleep(300);
   document.getElementById('confAmount').textContent = total > 0 ? `$${total.toFixed(2)}` : 'Free';
   document.getElementById('confRegistrants').textContent = registrantCount > 1
     ? `Paul LaFata + ${registrantCount - 1} other${registrantCount > 2 ? 's' : ''}`
     : 'Paul LaFata';
   document.getElementById('confirmationOverlay').classList.add('show');
-
-  // Update capacity
   const newSpots = 42 - registrantCount;
   document.getElementById('capacityText').textContent = `${newSpots} spots remaining`;
   const pct = ((58 + registrantCount) / 100) * 100;
   document.getElementById('capacityFill').style.width = pct + '%';
-
-  // Reset button
   btn.disabled = false;
   btn.innerHTML = total > 0
     ? `Complete Registration &mdash; $${total.toFixed(2)}`
